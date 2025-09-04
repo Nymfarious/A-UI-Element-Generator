@@ -2,41 +2,68 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* AI UI Generator Design System - Modern Purple/Blue Theme */
 
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 222 84% 5%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 222 84% 5%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 222 84% 5%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Purple/Blue AI Theme */
+    --primary: 259 94% 51%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 259 94% 65%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 84% 5%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 220 14% 96%;
+    --accent-foreground: 222 84% 5%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 259 94% 51%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* AI Generator Specific Colors */
+    --ai-purple: 259 94% 51%;
+    --ai-blue: 217 91% 60%;
+    --ai-pink: 316 73% 69%;
+    --ai-cyan: 189 94% 43%;
+
+    /* Gradients */
+    --gradient-ai: linear-gradient(135deg, hsl(var(--ai-purple)), hsl(var(--ai-blue)));
+    --gradient-glow: linear-gradient(135deg, hsl(var(--ai-purple) / 0.8), hsl(var(--ai-blue) / 0.8));
+    --gradient-bg: linear-gradient(135deg, hsl(var(--ai-purple) / 0.03), hsl(var(--ai-blue) / 0.05));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 14% 98%));
+
+    /* Shadows & Effects */
+    --shadow-ai: 0 10px 40px hsl(var(--ai-purple) / 0.15);
+    --shadow-glow: 0 0 40px hsl(var(--ai-purple) / 0.2);
+    --shadow-card: 0 4px 24px hsl(220 13% 91% / 0.4);
+    --shadow-card-hover: 0 8px 40px hsl(220 13% 91% / 0.6);
+
+    /* Glass Effects */
+    --glass-bg: hsla(0, 0%, 100%, 0.7);
+    --glass-border: hsla(0, 0%, 100%, 0.3);
+    --glass-blur: blur(12px);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +127,92 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gradient-to-br from-purple-50 via-white to-blue-50 text-foreground;
+    background-attachment: fixed;
+  }
+}
+
+@layer components {
+  /* AI Generator Button Variants */
+  .btn-ai-primary {
+    @apply bg-gradient-to-r from-purple-600 to-blue-600 text-white font-medium rounded-xl px-6 py-3;
+    @apply hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0;
+    @apply transition-all duration-200 ease-out;
+    box-shadow: var(--shadow-ai);
+  }
+
+  .btn-ai-secondary {
+    @apply border-2 border-purple-200 text-purple-700 font-medium rounded-xl px-6 py-3;
+    @apply hover:border-purple-300 hover:bg-purple-50 hover:-translate-y-0.5;
+    @apply transition-all duration-200 ease-out;
+  }
+
+  .btn-ai-ghost {
+    @apply text-gray-600 hover:text-gray-900 hover:bg-gray-100 font-medium rounded-xl px-4 py-2;
+    @apply transition-all duration-200 ease-out;
+  }
+
+  /* Card Variants */
+  .card-ai {
+    @apply bg-white rounded-2xl shadow-lg border border-gray-100;
+    @apply hover:shadow-xl hover:-translate-y-1;
+    @apply transition-all duration-300 ease-out;
+    background: var(--gradient-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-ai:hover {
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .card-glass {
+    @apply backdrop-blur-md rounded-2xl border;
+    background: var(--glass-bg);
+    border-color: var(--glass-border);
+    backdrop-filter: var(--glass-blur);
+  }
+
+  /* Input Variants */
+  .input-ai {
+    @apply w-full px-4 py-3 border-2 border-gray-200 rounded-xl;
+    @apply focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20;
+    @apply transition-all duration-200 outline-none;
+  }
+
+  .input-glass {
+    @apply w-full px-4 py-3 rounded-xl border backdrop-blur-md;
+    @apply focus:ring-2 focus:ring-purple-500/20 outline-none;
+    background: var(--glass-bg);
+    border-color: var(--glass-border);
+    backdrop-filter: var(--glass-blur);
+  }
+
+  /* Loading Animations */
+  .animate-spin-slow {
+    animation: spin 3s linear infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulse-glow {
+    0% {
+      box-shadow: 0 0 20px hsl(var(--ai-purple) / 0.3);
+    }
+    100% {
+      box-shadow: 0 0 40px hsl(var(--ai-purple) / 0.6);
+    }
+  }
+
+  /* Code Block */
+  .code-block {
+    @apply bg-gray-900 text-gray-100 font-mono text-sm p-4 rounded-lg;
+    @apply border border-gray-700 overflow-x-auto;
+  }
+
+  /* Gradient Text */
+  .text-gradient {
+    @apply bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent;
   }
 }
