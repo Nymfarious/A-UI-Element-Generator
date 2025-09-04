@@ -1,14 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/AIGenerator/Header";
 import PromptPanel, { GenerateConfig } from "@/components/AIGenerator/PromptPanel";
 import ResultsPanel from "@/components/AIGenerator/ResultsPanel";
-import { generateUIElements, GeneratedElement } from "@/services/replicateService";
+import ApiKeySetup from "@/components/AIGenerator/ApiKeySetup";
+import { generateUIElements, GeneratedElement, hasApiKey } from "@/services/replicateService";
 import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
   const [elements, setElements] = useState<GeneratedElement[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [apiKeyConfigured, setApiKeyConfigured] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    setApiKeyConfigured(hasApiKey());
+  }, []);
 
   const handleGenerate = async (config: GenerateConfig) => {
     setIsLoading(true);
@@ -47,10 +53,12 @@ const Index = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Left Panel - Input Form */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 space-y-6">
+            <ApiKeySetup onKeyConfigured={setApiKeyConfigured} />
             <PromptPanel 
               onGenerate={handleGenerate} 
-              isLoading={isLoading} 
+              isLoading={isLoading}
+              apiKeyConfigured={apiKeyConfigured}
             />
           </div>
 

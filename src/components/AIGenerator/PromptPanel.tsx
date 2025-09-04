@@ -9,6 +9,7 @@ import { Card } from "@/components/ui/card";
 interface PromptPanelProps {
   onGenerate: (config: GenerateConfig) => void;
   isLoading: boolean;
+  apiKeyConfigured: boolean;
 }
 
 export interface GenerateConfig {
@@ -19,7 +20,7 @@ export interface GenerateConfig {
   referenceImage?: File;
 }
 
-const PromptPanel = ({ onGenerate, isLoading }: PromptPanelProps) => {
+const PromptPanel = ({ onGenerate, isLoading, apiKeyConfigured }: PromptPanelProps) => {
   const [prompt, setPrompt] = useState("");
   const [elementType, setElementType] = useState("button");
   const [quantity, setQuantity] = useState([3]);
@@ -185,7 +186,7 @@ const PromptPanel = ({ onGenerate, isLoading }: PromptPanelProps) => {
         {/* Generate Button */}
         <Button
           onClick={handleGenerate}
-          disabled={!prompt.trim() || isLoading}
+          disabled={!prompt.trim() || isLoading || !apiKeyConfigured}
           className="btn-ai-primary w-full py-3"
         >
           <div className="flex items-center justify-center">
